@@ -4,6 +4,9 @@ on:
   issues:
     types: [labeled]
 
+permissions:
+  issues: write
+
 jobs:
   close-issues:
     runs-on: ubuntu-latest
@@ -24,14 +27,14 @@ jobs:
                 issue_number: issueNumber,
                 state: 'closed'
               });
-              
+
               await github.rest.issues.createComment({
                 owner: owner,
                 repo: repo,
                 issue_number: issueNumber,
                 body: `🚀 This issue was automatically closed because it was labeled as **${label}**.`
               });
-              
+
               console.log(`Closed issue #${issueNumber} due to label: ${label}`);
             } else {
               console.log(`Label '${label}' does not trigger auto-close. Issue #${issueNumber} remains open.`);
